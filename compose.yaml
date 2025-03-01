@@ -1,0 +1,37 @@
+services:
+  app:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - TYPEORM_CONNECTION=postgres
+      - TYPEORM_HOST=database
+      - TYPEORM_PORT=5432
+      - TYPEORM_USERNAME=test
+      - TYPEORM_PASSWORD=test
+      - TYPEORM_DATABASE=test
+      - TYPEORM_SYNCHRONIZE=true
+      - TYPEORM_ENTITIES=dist/**/*.entity.js
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    command: yarn run start:dev
+  db:
+    image: postgres:13
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+  # redis:
+  #   restart: always
+  #   image: redis:6
+  #   ports:
+  #     - '6379:6379'
+
+volumes:
+  db_data:
