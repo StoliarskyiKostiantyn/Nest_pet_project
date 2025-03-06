@@ -10,6 +10,7 @@ async function bootstrap() {
     .setTitle('Nest pet project')
     .setDescription('The API description')
     .setVersion(process.env.npm_package_version ?? '1.0')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
